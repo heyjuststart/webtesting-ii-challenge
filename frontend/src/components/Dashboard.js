@@ -10,10 +10,15 @@ const initialState = {
 
 const DashboardWrapper = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Controls = styled.div`
   display: flex;
+  > * {
+    margin: 0 5px;
+  }
 `;
 
 const Dashboard = props => {

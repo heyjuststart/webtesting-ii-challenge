@@ -8,6 +8,11 @@ afterEach(cleanup);
 
 describe('<Dashboard/>', () => {
   describe('strike button', () => {
+
+    it('renders without crashing', () => {
+      render(<Dashboard />);
+    });
+
     it('increments strikes by 1 if less than 3', () => {
       const { getByText } = render(<Dashboard />);
       const strikeButton = getByText('strike');
