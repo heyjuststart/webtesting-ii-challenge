@@ -9,7 +9,7 @@ const Display = ({ balls, strikes }) => {
   return (
     <DisplayWrapper>
       <div>Balls: {balls}</div>
-      <div>strikes: {strikes}</div>
+      <div>Strikes: {strikes}</div>
     </DisplayWrapper>
   );
 };
