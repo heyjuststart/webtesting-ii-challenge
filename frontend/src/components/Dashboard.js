@@ -38,14 +38,24 @@ const Dashboard = props => {
     }
   };
 
+  const handleFoul = () => {
+    if (strikes < 2) {
+      setDashState({ ...dashState, strikes: strikes + 1 });
+    }
+  };
+
+  const handleHit = () => {
+    setDashState(initialState);
+  };
+
   return (
     <DashboardWrapper>
       <Display balls={balls} strikes={strikes} />
       <Controls>
         <button onClick={handleStrike}>strike</button>
         <button onClick={handleBall}>ball</button>
-        <button>foul</button>
-        <button>hit</button>
+        <button onClick={handleFoul}>foul</button>
+        <button onClick={handleHit}>hit</button>
       </Controls>
     </DashboardWrapper>
   );
