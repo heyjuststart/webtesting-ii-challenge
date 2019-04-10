@@ -6,22 +6,36 @@ import Dashboard from './Dashboard';
 afterEach(cleanup);
 
 describe('<Dashboard/>', () => {
+  const setup = () => {
+    const utils = render(<Dashboard />);
+    const strikeButton = utils.getByText('strike');
+    const ballButton = utils.getByText('ball');
+    const foulButton = utils.getByText('foul');
+    const hitButton = utils.getByText('hit');
+
+    return {
+      strikeButton,
+      ballButton,
+      foulButton,
+      hitButton,
+      ...utils
+    };
+  };
+
   describe('strike button', () => {
     it('renders without crashing', () => {
       render(<Dashboard />);
     });
 
     it('increments strikes by 1 if less than 3', () => {
-      const { getByText } = render(<Dashboard />);
-      const strikeButton = getByText('strike');
+      const { getByText, strikeButton } = setup();
 
       fireEvent.click(strikeButton);
       getByText(/strikes: 1/i);
     });
 
     it('resets strikes if clicked when strikes is 2', () => {
-      const { getByText, queryByText } = render(<Dashboard />);
-      const strikeButton = getByText('strike');
+      const { getByText, strikeButton } = setup();
       fireEvent.click(strikeButton);
       fireEvent.click(strikeButton);
       fireEvent.click(strikeButton);
@@ -29,9 +43,7 @@ describe('<Dashboard/>', () => {
     });
 
     it('resets balls if clicked when strikes is 2', () => {
-      const { getByText } = render(<Dashboard />);
-      const strikeButton = getByText('strike');
-      const ballButton = getByText('ball');
+      const { getByText, strikeButton, ballButton } = setup();
       fireEvent.click(ballButton);
       getByText(/balls: 1/i);
       fireEvent.click(strikeButton);
@@ -43,16 +55,13 @@ describe('<Dashboard/>', () => {
 
   describe('ball button', () => {
     it('increments balls if balls < 3', () => {
-      const { getByText } = render(<Dashboard />);
-      const ballButton = getByText('ball');
+      const { getByText, ballButton } = setup();
       fireEvent.click(ballButton);
       getByText(/balls: 1/i);
     });
 
     it('resets score if clicked when balls is 3', () => {
-      const { getByText } = render(<Dashboard />);
-      const strikeButton = getByText('strike');
-      const ballButton = getByText('ball');
+      const { getByText, strikeButton, ballButton } = setup();
       fireEvent.click(strikeButton);
       fireEvent.click(ballButton);
       fireEvent.click(ballButton);
@@ -65,9 +74,7 @@ describe('<Dashboard/>', () => {
 
   describe('foul button', () => {
     it('increments strikes by 1 if strikes < 2', () => {
-      const { getByText } = render(<Dashboard />);
-      const foulButton = getByText('foul');
-      const strikeButton = getByText('strike');
+      const { getByText, foulButton, strikeButton } = setup();
       fireEvent.click(strikeButton);
       fireEvent.click(foulButton);
 
@@ -75,9 +82,7 @@ describe('<Dashboard/>', () => {
     });
 
     it('stops incrementing strikes when strikes is 2', () => {
-      const { getByText } = render(<Dashboard />);
-      const foulButton = getByText('foul');
-      const strikeButton = getByText('strike');
+      const { getByText, foulButton, strikeButton } = setup();
       fireEvent.click(strikeButton);
       fireEvent.click(strikeButton);
       fireEvent.click(foulButton);
@@ -88,11 +93,13 @@ describe('<Dashboard/>', () => {
 
   describe('hit button', () => {
     it('resets score when clicked', () => {
-      const { getByText } = render(<Dashboard />);
-      const foulButton = getByText('foul');
-      const strikeButton = getByText('strike');
-      const ballButton = getByText('ball');
-      const hitButton = getByText('hit');
+      const {
+        getByText,
+        foulButton,
+        strikeButton,
+        ballButton,
+        hitButton
+      } = setup();
       fireEvent.click(strikeButton);
       fireEvent.click(ballButton);
       fireEvent.click(foulButton);
