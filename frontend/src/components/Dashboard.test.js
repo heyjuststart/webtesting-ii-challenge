@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent, cleanup } from 'react-testing-library';
-import 'jest-dom/extend-expect';
 
 import Dashboard from './Dashboard';
 
@@ -8,7 +7,6 @@ afterEach(cleanup);
 
 describe('<Dashboard/>', () => {
   describe('strike button', () => {
-
     it('renders without crashing', () => {
       render(<Dashboard />);
     });
@@ -18,16 +16,16 @@ describe('<Dashboard/>', () => {
       const strikeButton = getByText('strike');
 
       fireEvent.click(strikeButton);
-      expect(getByText(/strikes: 1/i)).toBeInTheDocument();
+      getByText(/strikes: 1/i);
     });
 
     it('resets strikes if clicked when strikes is 2', () => {
-      const { getByText } = render(<Dashboard />);
+      const { getByText, queryByText } = render(<Dashboard />);
       const strikeButton = getByText('strike');
       fireEvent.click(strikeButton);
       fireEvent.click(strikeButton);
       fireEvent.click(strikeButton);
-      expect(getByText(/strikes: 0/i)).toBeInTheDocument();
+      getByText(/strikes: 0/i);
     });
 
     it('resets balls if clicked when strikes is 2', () => {
@@ -35,11 +33,11 @@ describe('<Dashboard/>', () => {
       const strikeButton = getByText('strike');
       const ballButton = getByText('ball');
       fireEvent.click(ballButton);
-      expect(getByText(/balls: 1/i)).toBeInTheDocument();
+      getByText(/balls: 1/i);
       fireEvent.click(strikeButton);
       fireEvent.click(strikeButton);
       fireEvent.click(strikeButton);
-      expect(getByText(/balls: 0/i)).toBeInTheDocument();
+      getByText(/balls: 0/i);
     });
   });
 
@@ -48,7 +46,7 @@ describe('<Dashboard/>', () => {
       const { getByText } = render(<Dashboard />);
       const ballButton = getByText('ball');
       fireEvent.click(ballButton);
-      expect(getByText(/balls: 1/i)).toBeInTheDocument();
+      getByText(/balls: 1/i);
     });
 
     it('resets score if clicked when balls is 3', () => {
@@ -60,8 +58,8 @@ describe('<Dashboard/>', () => {
       fireEvent.click(ballButton);
       fireEvent.click(ballButton);
       fireEvent.click(ballButton);
-      expect(getByText(/strikes: 0/i)).toBeInTheDocument();
-      expect(getByText(/balls: 0/i)).toBeInTheDocument();
+      getByText(/strikes: 0/i);
+      getByText(/balls: 0/i);
     });
   });
 
@@ -73,7 +71,7 @@ describe('<Dashboard/>', () => {
       fireEvent.click(strikeButton);
       fireEvent.click(foulButton);
 
-      expect(getByText(/strikes: 2/i)).toBeInTheDocument();
+      getByText(/strikes: 2/i);
     });
 
     it('stops incrementing strikes when strikes is 2', () => {
@@ -84,7 +82,7 @@ describe('<Dashboard/>', () => {
       fireEvent.click(strikeButton);
       fireEvent.click(foulButton);
 
-      expect(getByText(/strikes: 2/i)).toBeInTheDocument();
+      getByText(/strikes: 2/i);
     });
   });
 
@@ -99,8 +97,8 @@ describe('<Dashboard/>', () => {
       fireEvent.click(ballButton);
       fireEvent.click(foulButton);
       fireEvent.click(hitButton);
-      expect(getByText(/strikes: 0/i)).toBeInTheDocument();
-      expect(getByText(/balls: 0/i)).toBeInTheDocument();
+      getByText(/strikes: 0/i);
+      getByText(/balls: 0/i);
     });
   });
 });
